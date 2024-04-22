@@ -105,11 +105,7 @@ def interest(principal, rate, periods):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    principal = int(input("Please input principal amount or initial investment"))
-    rate = float (input("Please input the interest rate as a decimal number"))
-    periods = int(input("Please input the amount of periods with one period equating to a month"))
-
+def interest(principal, rate, periods):
     interestearned = principal * rate * periods
     result = int(principal + interestearned)
-
-    print(result)
+    return result
