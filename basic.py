@@ -33,7 +33,13 @@ def savings(gross_pay, tax_rate, expenses):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    gross_pay = int(input("Please enter gross pay"))
+    tax_rate = float(input("Please enter tax rate as a number between 0 and 1"))
+    expenses = int(input("Please enter gross expenses"))
+    taxdeductedpay = gross_pay * (1 - tax_rate)
+    finalpay = taxdeductedpay - expenses
+    result = int(finalpay)
+    print(result)
 
 def material_waste(total_material, material_units, num_jobs, job_consumption):
     '''Material Waste.
@@ -68,7 +74,17 @@ def material_waste(total_material, material_units, num_jobs, job_consumption):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    total_material = int(input("Please enter value for total material available"))
+    material_units = str(input("input unit of choice: kg, L, etc"))
+    num_jobs = int(input("Please input value for number of jobs to run"))
+    job_consumption = int(input("Please input amount of material consumed per job"))
+    
+    wastedmaterial = num_jobs * job_consumption 
+    remainingmaterial = total_material - wastedmaterial 
+
+    result = str(remainingmaterial) + " " + material_units
+    
+    print(result)
 
 def interest(principal, rate, periods):
     '''Interest.
@@ -98,4 +114,11 @@ def interest(principal, rate, periods):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    principal = int(input("Please input principal amount or initial investment"))
+    rate = float (input("Please input the interest rate as a decimal number"))
+    periods = int(input("Please input the amount of periods with one period equating to a month"))
+
+    interestearned = principal * rate * periods
+    result = int(principal + interestearned)
+
+    print(result)
