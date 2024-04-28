@@ -48,7 +48,19 @@ def relationship_status(from_member, to_member, social_graph):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+def relationship_status(from_member, to_member, social_graph):
+    fromfollows = to_member in social_graph.get(from_member, []) 
+    tofollows = from_member in social_graph.get(to_member, []) 
+
+    if fromfollows and tofollows:
+        return "friends"
+    elif fromfollows:
+        return "follower"
+    elif tofollows:
+        return "followed by"
+    else:
+        return "no relationship"
+
 
 
 def tic_tac_toe(board):
@@ -77,7 +89,20 @@ def tic_tac_toe(board):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+def tic_tac_toe(board):        
+    size = len(board)
+    
+    for i in range(size):
+        if all(board[i][j] == board[i][0] for j in range(1, size)) or \
+           all(board[j][i] == board[0][i] for j in range(1, size)):
+            return board[i][0] 
+
+   
+    if all(board[i][i] == board[0][0] for i in range(1, size)) or \
+       all(board[i][size - 1 - i] == board[0][size - 1] for i in range(1, size)):
+        return board[0][0] 
+
+    return "NO WINNER"
 
 def eta(first_stop, second_stop, route_map):
     '''ETA.
@@ -110,4 +135,20 @@ def eta(first_stop, second_stop, route_map):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+def eta(first_stop, second_stop, route_map):
+    total_travel_time = 0
+    current_stop = first_stop
+
+    while current_stop != second_stop:
+        next_stop_found = False
+        for key, value in route_map.items():
+            if key[0] == current_stop:
+                total_travel_time += value['travel_time_mins']
+                current_stop = key[1]
+                next_stop_found = True
+                break
+        
+        next_stop_found or return "Invalid route"
+
+    return total_travel_time
+
