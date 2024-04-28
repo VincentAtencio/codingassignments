@@ -93,12 +93,12 @@ def tic_tac_toe(board):
     size = len(board)
     
     for i in range(size):
-        if all(board[i][j] == board[i][0] for j in range(1, size)) or \
+        if all(board[i][j] == board[i][0] for j in range(1, size)) or 
            all(board[j][i] == board[0][i] for j in range(1, size)):
             return board[i][0] 
 
    
-    if all(board[i][i] == board[0][0] for i in range(1, size)) or \
+    if all(board[i][i] == board[0][0] for i in range(1, size)) or 
        all(board[i][size - 1 - i] == board[0][size - 1] for i in range(1, size)):
         return board[0][0] 
 
