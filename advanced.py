@@ -12,6 +12,44 @@ Please refer to the file `advanced_sample_data.py` for examples of:
 - the `route_map` parameter for the eta item
 '''
 
+social_graph = {
+    "@bongolpoc":{"first_name":"Joselito",
+                  "last_name":"Olpoc",
+                  "following":[
+                  ]
+    },
+    "@joaquin":  {"first_name":"Joaquin",
+                  "last_name":"Gonzales",
+                  "following":[
+                      "@chums","@jobenilagan"
+                  ]
+    },
+    "@chums" : {"first_name":"Matthew",
+                "last_name":"Uy",
+                "following":[
+                    "@bongolpoc","@miketan","@rudyang","@joeilagan"
+                ]
+    },
+    "@jobenilagan":{"first_name":"Joben",
+                   "last_name":"Ilagan",
+                   "following":[
+                    "@eeebeee","@joeilagan","@chums","@joaquin"
+                   ]
+    },
+    "@joeilagan":{"first_name":"Joe",
+                  "last_name":"Ilagan",
+                  "following":[
+                    "@eeebeee","@jobenilagan","@chums"
+                  ]
+    },
+    "@eeebeee":  {"first_name":"Elizabeth",
+                  "last_name":"Ilagan",
+                  "following":[
+                    "@jobenilagan","@joeilagan"
+                  ]
+    },
+}
+
 def relationship_status(from_member, to_member, social_graph):
     '''Relationship Status.
     20 points.
@@ -48,20 +86,68 @@ def relationship_status(from_member, to_member, social_graph):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-def relationship_status(from_member, to_member, social_graph):
-    fromfollows = to_member in social_graph.get(from_member, []) 
-    tofollows = from_member in social_graph.get(to_member, []) 
+def relationship_status(social_graph, from_member, to_member):
+    from_member = from_member.lower()
+    to_member = to_member.lower()
 
-    if fromfollows and tofollows:
+    if from_member not in social_graph or to_member not in social_graph:
+        return "no relationship"
+
+    from_following = social_graph[from_member].get("following", [])
+    to_following = social_graph[to_member].get("following", [])
+
+    if to_member in from_following and from_member in to_following:
         return "friends"
-    elif fromfollows:
+    elif to_member in from_following:
         return "follower"
-    elif tofollows:
+    elif from_member in to_following:
         return "followed by"
     else:
         return "no relationship"
 
 
+board1 = [
+['X','X','O'],
+['O','X','O'],
+['O','','X'],
+]
+
+board2 = [
+['X','X','O'],
+['O','X','O'],
+['','O','X'],
+]
+
+board3 = [
+['O','X','O'],
+['','O','X'],
+['X','X','O'],
+]
+
+board4 = [
+['X','X','X'],
+['O','X','O'],
+['O','','O'],
+]
+
+board5 = [
+['X','X','O'],
+['O','X','O'],
+['X','','O'],
+]
+
+board6 = [
+['X','X','O'],
+['O','X','O'],
+['X','',''],
+]
+
+board7 = [
+['X','X','O',''],
+['O','X','O','O'],
+['X','','','O'],
+['O','X','','']
+]
 
 def tic_tac_toe(board):
     '''Tic Tac Toe.
@@ -89,20 +175,41 @@ def tic_tac_toe(board):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-def tic_tac_toe(board):        
+def tic_tac_toe(board):
     size = len(board)
+    for symbol in ['X', 'O']:
+      
+        for i in range(size):
+            if all(cell == symbol for cell in board[i]) or all(board[j][i] == symbol for j in range(size)):
+                return symbol
+        
+        
+        if all(board[i][i] == symbol for i in range(size)) or all(board[i][size - 1 - i] == symbol for i in range(size)):
+            return symbol
     
-    for i in range(size):
-        if all(board[i][j] == board[i][0] for j in range(1, size)) or 
-           all(board[j][i] == board[0][i] for j in range(1, size)):
-            return board[i][0] 
-
-   
-    if all(board[i][i] == board[0][0] for i in range(1, size)) or 
-       all(board[i][size - 1 - i] == board[0][size - 1] for i in range(1, size)):
-        return board[0][0] 
-
+  
     return "NO WINNER"
+
+route_map = {
+    ("upd", "admu"): {
+        "travel_time_mins": 10
+    },
+    ("admu", "dlsu"): {
+        "travel_time_mins": 35
+    },
+    ("dlsu", "upd"): {
+        "travel_time_mins": 55
+    },
+    ('a1', 'a2'): {
+        'travel_time_mins': 10
+    },
+    ('a2', 'b1'): {
+        'travel_time_mins': 10230
+    },
+    ('b1', 'a1'): {
+        'travel_time_mins': 1
+    }
+}
 
 def eta(first_stop, second_stop, route_map):
     '''ETA.
@@ -135,20 +242,23 @@ def eta(first_stop, second_stop, route_map):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-def eta(first_stop, second_stop, route_map):
-    total_travel_time = 0
-    current_stop = first_stop
-
-    while current_stop != second_stop:
-        next_stop_found = False
-        for key, value in route_map.items():
-            if key[0] == current_stop:
-                total_travel_time += value['travel_time_mins']
-                current_stop = key[1]
-                next_stop_found = True
+def eta (first_stop, second_stop, route_map):
+    previous = first_stop
+    total = 0
+    
+    while True:
+        next_stop = None
+        for route in route_map:
+            if route[0] == previous:
+                next_stop = route[1]
                 break
         
-        next_stop_found or return "Invalid route"
+        if next_stop:
+            total += route_map[(previous, next_stop)]['travel_time_mins']
+            if next_stop == second_stop:
+                return total
+            previous = next_stop
+        else:
+            return None
 
-    return total_travel_time
 
